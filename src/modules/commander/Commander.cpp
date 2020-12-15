@@ -2453,10 +2453,8 @@ Commander::run()
 
 			if (_armed.armed) {
 				if (_status.failure_detector_status & vehicle_status_s::FAILURE_ARM_ESC) {
-					const hrt_abstime time_at_arm = _armed.armed_time_ms * 1000;
-
 					// 500ms is the PWM spoolup time. Within this timeframe controllers are not affecting actuator_outputs
-					if (hrt_elapsed_time(&time_at_arm) < 500_ms) {
+					if (hrt_elapsed_time(&_armed.armed_time) < 500_ms) {
 						arm_disarm(false, true, arm_disarm_reason_t::FAILURE_DETECTOR);
 						mavlink_log_critical(&_mavlink_log_pub, "ESCs did not respond to arm request");
 					}
