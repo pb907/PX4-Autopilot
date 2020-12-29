@@ -121,14 +121,9 @@
 #define PX4IO_P_STATUS_FLAGS_RC_SUMD		(1 << 15) /* SUMD input is valid */
 
 #define PX4IO_P_STATUS_ALARMS			3	 /* alarm flags - alarms latch, write 1 to a bit to clear it */
-#define PX4IO_P_STATUS_ALARMS_VBATT_LOW		(1 << 0) /* [1] VBatt is very close to regulator dropout */
-#define PX4IO_P_STATUS_ALARMS_TEMPERATURE	(1 << 1) /* board temperature is high */
-#define PX4IO_P_STATUS_ALARMS_SERVO_CURRENT	(1 << 2) /* [1] servo current limit was exceeded */
-#define PX4IO_P_STATUS_ALARMS_ACC_CURRENT	(1 << 3) /* [1] accessory current limit was exceeded */
-#define PX4IO_P_STATUS_ALARMS_FMU_LOST		(1 << 4) /* timed out waiting for controls from FMU */
-#define PX4IO_P_STATUS_ALARMS_RC_LOST		(1 << 5) /* timed out waiting for RC input */
-#define PX4IO_P_STATUS_ALARMS_PWM_ERROR		(1 << 6) /* PWM configuration or output was bad */
-#define PX4IO_P_STATUS_ALARMS_VSERVO_FAULT	(1 << 7) /* [2] VServo was out of the valid range (2.5 - 5.5 V) */
+#define PX4IO_P_STATUS_ALARMS_FMU_LOST		(1 << 1) /* timed out waiting for controls from FMU */
+#define PX4IO_P_STATUS_ALARMS_RC_LOST		(1 << 2) /* timed out waiting for RC input */
+#define PX4IO_P_STATUS_ALARMS_PWM_ERROR		(1 << 3) /* PWM configuration or output was bad */
 
 #define PX4IO_P_STATUS_VSERVO			6	/* [2] servo rail voltage in mV */
 #define PX4IO_P_STATUS_VRSSI			7	/* [2] RSSI voltage */

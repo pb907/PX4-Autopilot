@@ -746,26 +746,7 @@ int PX4IO::init()
 
 	/* try to claim the generic PWM output device node as well - it's OK if we fail at this */
 	auto class_instance = register_class_devname(PWM_OUTPUT_BASE_DEVICE_PATH);
-
-	if (class_instance == CLASS_DEVICE_PRIMARY) {
-		PX4_INFO("primary class instance: %d", class_instance);
-
-	} else if (class_instance < 0) {
-		PX4_ERR("FAILED registering class device");
-	}
-
-	/* try to claim the generic PWM output device node as well - it's OK if we fail at this */
-	//ret = register_driver(PWM_OUTPUT0_DEVICE_PATH, &fops, 0666, (void *)this);
-
-	if (ret == OK) {
-		PX4_INFO("default PWM output device");
-
-		//_class_instance = register_class_devname(PWM_OUTPUT_BASE_DEVICE_PATH);
-		_mixing_output.setDriverInstance(CLASS_DEVICE_PRIMARY);
-
-	} else {
-		PX4_ERR("register_driver ret=%d", ret);
-	}
+	_mixing_output.setDriverInstance(class_instance);
 
 	_mixing_output.setMaxTopicUpdateRate(2500);
 
@@ -1217,14 +1198,9 @@ int PX4IO::io_get_status()
 		status.status_rc_sumd         = STATUS_FLAGS & PX4IO_P_STATUS_FLAGS_RC_SUMD;
 
 		// PX4IO_P_STATUS_ALARMS
-		status.alarm_vbatt_low     = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_VBATT_LOW;
-		status.alarm_temperature   = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_TEMPERATURE;
-		status.alarm_servo_current = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_SERVO_CURRENT;
-		status.alarm_acc_current   = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_ACC_CURRENT;
 		status.alarm_fmu_lost      = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_FMU_LOST;
 		status.alarm_rc_lost       = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_RC_LOST;
 		status.alarm_pwm_error     = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_PWM_ERROR;
-		status.alarm_vservo_fault  = STATUS_ALARMS & PX4IO_P_STATUS_ALARMS_VSERVO_FAULT;
 
 		// PX4IO_P_SETUP_ARMING
 		status.arming_io_arm_ok            = SETUP_ARMING & PX4IO_P_SETUP_ARMING_IO_ARM_OK;
@@ -1718,8 +1694,6 @@ int PX4IO::ioctl(file *filep, int cmd, unsigned long arg)
 				}
 			}
 
-			/* copy values to registers in IO */
-			ret = io_reg_set(PX4IO_PAGE_FAILSAFE_PWM, 0, pwm->values, pwm->channel_count);
 			break;
 		}
 

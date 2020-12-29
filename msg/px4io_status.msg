@@ -22,14 +22,9 @@ bool status_rc_st24
 bool status_rc_sumd
 
 # PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-bool alarm_vbatt_low
-bool alarm_temperature
-bool alarm_servo_current
-bool alarm_acc_current
 bool alarm_fmu_lost
 bool alarm_rc_lost
 bool alarm_pwm_error
-bool alarm_vservo_fault
 
 # PX4IO arming (PX4IO_P_SETUP_ARMING)
 bool arming_io_arm_ok
